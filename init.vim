@@ -1,43 +1,70 @@
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 
+" Intellisense
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree'
-"Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"
+" File explorer with Icons
+Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
+
+" Shows git diff 
 Plug 'airblade/vim-gitgutter'
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
+
+" File search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+
+" To comment stuff
 Plug 'scrooloose/nerdcommenter'
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-Plug 'christoomey/vim-tmux-navigator'
-
+" Theme 
 Plug 'morhetz/gruvbox'
 
-Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+" TS Syntax
+" Plug 'HerringtonDarkholme/yats.vim' 
 
+" TypeScript and TSX support
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
-Plug 'severin-lemaignan/vim-minimap'
 " Initialize plugin system
 call plug#end()
 
-inoremap jk <ESC>
+" fzf bindings
+silent! nmap <C-p> :FZF<CR>
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \}
+
+" requires silversearcher-ag
+" used to ignore gitignore files
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+
+
+" Toggle NERDTree with CTRL+n
 nmap <C-n> :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen = 1
 
 " To comment stuff
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
+
+" Automatically close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Open NERDTree on start up
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-" open NERDTree automatically
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * NERDTree
+" Delete buffer of file you delete from NERDTree
+let NERDTreeAutoDeleteBuffer = 1
 
 let g:NERDTreeGitStatusWithFlags = 1
 "let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -66,8 +93,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 
-" ctrlp
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " j/k will move virtual lines (lines that wrap)
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -85,6 +110,11 @@ set expandtab
 set guicursor=
 
 colorscheme gruvbox
+
+" Enable theming support
+if (has("termguicolors"))
+  set termguicolors
+endif
 
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
@@ -112,13 +142,16 @@ let g:coc_global_extensions = [
   \ 'coc-eslint', 
   \ 'coc-prettier', 
   \ 'coc-json', 
+  \ 'coc-emmet',
+  \ 'coc-css',
+  \ 'coc-html',
   \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
 set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" set scroll of 5 lines
+" set scrolloff 5 lines
 " set scrolloff=5
 
 " don't give |ins-completion-menu| messages.
@@ -204,21 +237,34 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Save files
-nmap <C-s> :wa<CR>
-imap <C-s> :wa<CR>
+inoremap <silent> <C-s> <ESC> :wa<CR>
+noremap <C-s> :wa<CR>
 
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-" nmap <silent> <C-d> <Plug>(coc-range-select)
-" xmap <silent> <C-d> <Plug>(coc-range-select)
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" open new split panes to right and below
+set splitright
+set splitbelow
 
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
 
-" use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" open terminal on ctrl+t
+function! OpenTerminal()
+  split term://bash
+  resize 10
+endfunction
+nnoremap <c-t> :call OpenTerminal()<CR>
+
+" use CTRL+hjkl to move between split/vsplit panels
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 
