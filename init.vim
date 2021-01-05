@@ -26,6 +26,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " Theme 
 Plug 'morhetz/gruvbox'
+Plug 'NLKNguyen/papercolor-theme'
 
 " TS Syntax
 " Plug 'HerringtonDarkholme/yats.vim' 
@@ -103,6 +104,7 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 set relativenumber
+set number
 set smarttab
 set smartcase
 set ignorecase
@@ -113,7 +115,7 @@ set shiftwidth=2
 set expandtab
 set guicursor=
 
-colorscheme gruvbox
+colorscheme PaperColor
 
 highlight Normal ctermbg=NONE guibg=NONE
 
