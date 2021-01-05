@@ -238,8 +238,8 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Save files
-inoremap <silent> <C-s> <ESC> :wa<CR>
-noremap <C-s> :wa<CR>
+inoremap <silent> <C-s> <ESC> :w<CR>
+noremap <C-s> :w<CR>
 
 " open new split panes to right and below
 set splitright
