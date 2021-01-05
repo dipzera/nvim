@@ -10,6 +10,9 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 
+" Git inside Vim commands
+Plug 'tpope/vim-fugitive'
+
 " Shows git diff 
 Plug 'airblade/vim-gitgutter'
 
@@ -112,9 +115,13 @@ set guicursor=
 
 colorscheme gruvbox
 
+highlight Normal ctermbg=NONE guibg=NONE
+
 " Enable theming support
-if (has("termguicolors"))
-  set termguicolors
+if has("termguicolors")     " set true colors
+    set t_8f=\[[38;2;%lu;%lu;%lum
+    set t_8b=\[[48;2;%lu;%lu;%lum
+    set termguicolors
 endif
 
 " sync open file with NERDTree
