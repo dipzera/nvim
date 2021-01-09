@@ -120,9 +120,12 @@ set shiftwidth=2
 set expandtab
 set guicursor=
 
-colorscheme PaperColor
+colorscheme gruvbox
 
 highlight Normal ctermbg=NONE guibg=NONE
+
+nmap <leader>bg :highlight Normal guibg=NONE<CR>
+
 
 " Enable theming support
 if has("termguicolors")     " set true colors
@@ -160,6 +163,7 @@ let g:coc_global_extensions = [
   \ 'coc-emmet',
   \ 'coc-css',
   \ 'coc-html',
+  \ 'coc-rls'
   \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
