@@ -20,6 +20,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" Rust lang support
+Plug 'rust-lang/rust.vim'
 
 " To comment stuff
 Plug 'scrooloose/nerdcommenter'
@@ -65,6 +67,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Auto-focus second panel
+au VimEnter * wincmd l
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
