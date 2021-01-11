@@ -27,7 +27,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " Theme 
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ayu-theme/ayu-vim'
 
@@ -54,12 +54,6 @@ let g:fzf_action = {
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 
-" Toggle NERDTree with CTRL+n
-nmap <C-n> :NERDTreeToggle<CR>
-
-" To comment stuff
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
 
 " Automatically close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -141,12 +135,16 @@ set notitle
 " always show signcolumns
 set signcolumn=yes
 
-colorscheme ayu
+" if hidden is not set, TextEdit might fail.
+set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+colorscheme gruvbox
 
 highlight Normal ctermbg=NONE guibg=NONE
-
-nmap <leader>bg :highlight Normal guibg=NONE<CR>
-nmap <leader>so :source %<CR>
 
 
 " Enable theming support
@@ -188,13 +186,6 @@ let g:coc_global_extensions = [
   \ 'coc-rls'
   \ ]
 " from readme
-" if hidden is not set, TextEdit might fail.
-set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -304,3 +295,13 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 
+
+" Toggle NERDTree with CTRL+n
+nmap <C-n> :NERDTreeToggle<CR>
+
+" To comment stuff
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
+
+nmap <leader>bg :highlight Normal guibg=NONE<CR>
+nmap <leader>so :source %<CR>
