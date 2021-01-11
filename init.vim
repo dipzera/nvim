@@ -8,7 +8,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "
 " File explorer with Icons
 Plug 'scrooloose/nerdtree'
-Plug 'ryanoasis/vim-devicons'
+"Plug 'ryanoasis/vim-devicons'
 
 " Git inside Vim commands
 Plug 'tpope/vim-fugitive'
@@ -113,24 +113,40 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 set relativenumber
 set number
+set nohlsearch
+set hidden
+set noerrorbells
+set nowrap
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
 set smarttab
 set smartcase
+set scrolloff=8
+set smartindent
 set ignorecase
 set cindent
 set tabstop=2
 set shiftwidth=2
 " always uses spaces instead of tab characters
 set expandtab
+set colorcolumn=80
 set guicursor=
 
 " Automatically set title of nvim to currently opened file
 set notitle
+
+" always show signcolumns
+set signcolumn=yes
 
 colorscheme ayu
 
 highlight Normal ctermbg=NONE guibg=NONE
 
 nmap <leader>bg :highlight Normal guibg=NONE<CR>
+nmap <leader>so :source %<CR>
 
 
 " Enable theming support
@@ -176,14 +192,9 @@ let g:coc_global_extensions = [
 set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" set scrolloff 5 lines
-" set scrolloff=5
-
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
-" always show signcolumns
-set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
