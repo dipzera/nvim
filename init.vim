@@ -120,6 +120,16 @@ set shiftwidth=2
 set expandtab
 set guicursor=
 
+" Automatically set title of nvim to currently opened file
+let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
+if &term == "screen"
+  set t_ts=^[k
+  set t_fs=^[\
+endif
+if &term == "screen" || &term == "xterm"
+  set title
+endif
+
 colorscheme gruvbox
 
 highlight Normal ctermbg=NONE guibg=NONE
