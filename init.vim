@@ -29,6 +29,7 @@ Plug 'scrooloose/nerdcommenter'
 " Theme 
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'ayu-theme/ayu-vim'
 
 " TS Syntax
 " Plug 'HerringtonDarkholme/yats.vim' 
@@ -125,7 +126,7 @@ set guicursor=
 " Automatically set title of nvim to currently opened file
 set notitle
 
-colorscheme gruvbox
+colorscheme ayu
 
 highlight Normal ctermbg=NONE guibg=NONE
 
