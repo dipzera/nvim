@@ -93,6 +93,8 @@ let g:NERDTreeGitStatusWithFlags = 1
 
 let g:NERDTreeIgnore = ['^node_modules$']
 
+let mapleader = " "
+
 " vim-prettier
 "let g:prettier#quickfix_enabled = 0
 "let g:prettier#quickfix_auto_focus = 0
@@ -121,14 +123,7 @@ set expandtab
 set guicursor=
 
 " Automatically set title of nvim to currently opened file
-let &titlestring = hostname() . "[vim(" . expand("%:t") . ")]"
-if &term == "screen"
-  set t_ts=^[k
-  set t_fs=^[\
-endif
-if &term == "screen" || &term == "xterm"
-  set title
-endif
+set notitle
 
 colorscheme gruvbox
 
