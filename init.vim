@@ -13,8 +13,8 @@ Plug 'scrooloose/nerdtree'
 " Git inside Vim commands
 Plug 'tpope/vim-fugitive'
 
-" Shows git diff 
-Plug 'airblade/vim-gitgutter'
+" Git status line
+Plug 'vim-airline/vim-airline'
 
 " File search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -51,7 +51,7 @@ let g:fzf_action = {
 
 " requires silversearcher-ag
 " used to ignore gitignore files
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 
 
 
@@ -304,4 +304,9 @@ vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
 
 nmap <leader>bg :highlight Normal guibg=NONE<CR>
-nmap <leader>so :source %<CR>
+
+" Fugitive bindings
+nmap <leader>gh :diffget //3<CR>
+nmap <leader>gu :diffget //2<CR>
+nmap <leader>gs :G<CR>
+
