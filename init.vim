@@ -225,14 +225,15 @@ augroup mygroup
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
-  " Auto-focus second panel
-  au VimEnter * wincmd l
 
   " Highlight currently open buffer in NERDTree
   autocmd BufEnter * call SyncTree()
 
   "" Opens NERDTree on startup
   au VimEnter * NERDTree
+
+  " Auto-focus second panel
+  au VimEnter * wincmd l
 augroup end
 
 
