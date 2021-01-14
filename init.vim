@@ -14,14 +14,11 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 
 " Git status line
-Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline'
 
 " File search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
-" Rust lang support
-Plug 'rust-lang/rust.vim'
 
 " To comment stuff
 Plug 'scrooloose/nerdcommenter'
@@ -52,19 +49,6 @@ let g:fzf_action = {
 " requires silversearcher-ag
 " used to ignore gitignore files
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-
-
-
-" Automatically close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Open NERDTree on start up
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Auto-focus second panel
-au VimEnter * wincmd l
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -101,9 +85,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 
 
-" j/k will move virtual lines (lines that wrap)
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 set relativenumber
 set number
@@ -169,13 +150,10 @@ function! SyncTree()
   endif
 endfunction
 
-" Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
 
 " coc config
 let g:coc_global_extensions = [
   \ 'coc-snippets',
-  \ 'coc-pairs',
   \ 'coc-tsserver',
   \ 'coc-eslint', 
   \ 'coc-prettier', 
@@ -186,6 +164,7 @@ let g:coc_global_extensions = [
   \ 'coc-rls'
   \ ]
 " from readme
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -220,7 +199,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent>K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -230,9 +209,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
 
@@ -240,28 +216,25 @@ nmap <F2> <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+
+
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
+  " Auto-focus second panel
+  au VimEnter * wincmd l
+
+  " Highlight currently open buffer in NERDTree
+  autocmd BufEnter * call SyncTree()
+
+  "" Opens NERDTree on startup
+  au VimEnter * NERDTree
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
 
 " Save files
 inoremap <silent> <C-s> <ESC> :w<CR>
@@ -270,19 +243,6 @@ noremap <C-s> :w<CR>
 " open new split panes to right and below
 set splitright
 set splitbelow
-
-" turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
-
-" start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
-" open terminal on ctrl+t
-function! OpenTerminal()
-  split term://bash
-  resize 10
-endfunction
-nnoremap <c-t> :call OpenTerminal()<CR>
 
 " use CTRL+hjkl to move between split/vsplit panels
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -293,7 +253,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
 
 
 " Toggle NERDTree with CTRL+n
@@ -310,6 +269,14 @@ nmap <leader>gh :diffget //3<CR>
 nmap <leader>gu :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
-
 inoremap jk <Esc>
 inoremap kj <Esc>
+
+
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
