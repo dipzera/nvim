@@ -14,7 +14,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 
 " Git status line
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 
 " File search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
