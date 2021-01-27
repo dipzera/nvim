@@ -14,7 +14,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 
 " Git status line
-"Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 
 " File search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -107,8 +107,8 @@ set tabstop=2
 set shiftwidth=2
 " always uses spaces instead of tab characters
 set expandtab
-set colorcolumn=80
 set guicursor=
+set clipboard=unnamedplus
 
 " Automatically set title of nvim to currently opened file
 set notitle
@@ -266,8 +266,8 @@ nmap ++ <plug>NERDCommenterToggle
 nmap <leader>bg :highlight Normal guibg=NONE<CR>
 
 " Fugitive bindings
-nmap <leader>gh :diffget //3<CR>
-nmap <leader>gu :diffget //2<CR>
+nmap <leader>gl :diffget //3<CR>
+nmap <leader>gh :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
 inoremap jk <Esc>
