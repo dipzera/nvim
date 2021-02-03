@@ -153,6 +153,8 @@ endfunction
 
 " coc config
 let g:coc_global_extensions = [
+  \ 'coc-java',
+  \ 'coc-pairs',
   \ 'coc-snippets',
   \ 'coc-tsserver',
   \ 'coc-eslint', 
@@ -274,10 +276,3 @@ inoremap jk <Esc>
 inoremap kj <Esc>
 
 
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
