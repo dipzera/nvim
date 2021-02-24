@@ -73,7 +73,6 @@ let g:NERDTreeGitStatusWithFlags = 1
 let g:NERDTreeIgnore = ['^node_modules$']
 
 let mapleader = " "
-
 " vim-prettier
 "let g:prettier#quickfix_enabled = 0
 "let g:prettier#quickfix_auto_focus = 0
@@ -84,9 +83,8 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 "autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 
-
+set list!
 set lcs+=space:·
-set relativenumber
 set number
 set nohlsearch
 set hidden
