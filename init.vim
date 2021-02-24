@@ -85,7 +85,7 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 
 
-
+set lcs+=space:·
 set relativenumber
 set number
 set nohlsearch
