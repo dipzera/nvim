@@ -273,4 +273,7 @@ nmap <leader>gs :G<CR>
 inoremap jk <Esc>
 inoremap kj <Esc>
 
+" console log from insert mode
+imap clg console.log()<Esc><S-f>(a
+nmap clg yiwoclg<Esc>a
 
